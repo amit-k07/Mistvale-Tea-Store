@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mistvale Tea Co. - Hill-grown tea, honestly made</title>
+<meta name="description" content="Discover Mistvale's premium selection of teas from the Darjeeling hills and beyond. Honestly made, hill-grown tea.">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+:root {
+  --tea-green: #1f3d2b;
+  --leaf: #4f7942;
+  --cream: #f6f1e7;
+  --parchment: #ebe2cf;
+  --saffron: #d9962b;
+  --ink: #1b1b1b;
+  --error: #b3261e;
+  
+  --font-heading: 'Fraunces', serif;
+  --font-body: 'Inter', sans-serif;
+  
+  --radius: 8px;
+  --transition: 200ms ease;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--ink);
+  background-color: var(--cream);
+  line-height: 1.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+*:focus-visible { outline: 2px solid var(--saffron); outline-offset: 2px; }
+
+h1, h2, h3, h4, h5 { font-family: var(--font-heading); font-weight: 500; margin: 0 0 16px; color: var(--tea-green); }
+h1 { font-size: clamp(40px, 5vw, 64px); line-height: 1.1; }
+h2 { font-size: clamp(28px, 4vw, 40px); }
+h3 { font-size: clamp(20px, 3vw, 24px); }
+p { margin: 0 0 16px; }
+
+.wrapper { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
+section { padding: 48px 0; }
+@media (min-width: 768px) { section { padding: 80px 0; } }
+.bg-parchment { background-color: var(--parchment); }
+
+.announce { background-color: var(--tea-green); color: var(--cream); text-align: center; padding: 8px; font-size: 14px; }
+
+.header { background-color: var(--cream); padding: 16px 0; border-bottom: 1px solid var(--parchment); position: sticky; top: 0; z-index: 40; }
+.header .wrapper { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+.logo { font-family: var(--font-heading); font-size: 24px; font-weight: 700; color: var(--tea-green); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+.logo svg { height: 32px; width: auto; fill: var(--tea-green); }
+.nav { display: flex; gap: 24px; align-items: center; }
+.nav a { color: var(--ink); text-decoration: none; font-weight: 500; transition: color var(--transition); }
+.nav a:hover { color: var(--leaf); text-decoration: underline; }
+
+.search { padding: 8px 16px; border: 1px solid #ccc; border-radius: 4px; font-family: var(--font-body); font-size: 14px; width: 100%; max-width: 250px; }
+.cart-btn { background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 8px; font-family: var(--font-body); font-size: 16px; color: var(--ink); padding: 8px; border-radius: var(--radius); transition: background var(--transition); }
+.cart-btn:hover { background-color: var(--parchment); }
+#cart-count { background-color: var(--saffron); color: var(--ink); border-radius: 12px; padding: 2px 8px; font-size: 14px; font-weight: 600; }
+
+.hero { position: relative; height: 60vh; min-height: 400px; display: flex; align-items: center; overflow: hidden; background-color: var(--tea-green); }
+.hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url('images/hero.jpg') center/cover; opacity: 0.6; mix-blend-mode: multiply; }
+.hero-content { position: relative; z-index: 10; max-width: 600px; color: var(--cream); }
+.hero-content h1 { color: var(--cream); }
+.hero-content p { font-size: 18px; margin-bottom: 32px; }
+
+.btn { display: inline-flex; justify-content: center; align-items: center; min-height: 44px; padding: 10px 24px; border-radius: var(--radius); font-family: var(--font-body); font-weight: 600; font-size: 16px; cursor: pointer; transition: background var(--transition), transform var(--transition), border-color var(--transition); text-decoration: none; border: 2px solid transparent; }
+.btn-primary { background-color: var(--tea-green); color: var(--cream); }
+.btn-primary:hover:not(:disabled) { background-color: var(--leaf); transform: translateY(-2px); }
+.btn-primary:active:not(:disabled) { transform: translateY(0); }
+.btn-secondary { background-color: transparent; color: var(--tea-green); border-color: var(--tea-green); }
+.btn-secondary:hover:not(:disabled) { background-color: var(--tea-green); color: var(--cream); }
+.btn:disabled, .btn.disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+
+.trust-strip { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 24px; background-color: var(--parchment); padding: 24px 0; text-align: center; }
+.trust-item { flex: 1; min-width: 200px; font-weight: 500; font-size: 14px; color: var(--tea-green); }
+
+.shop-controls { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 32px; }
+.filters { display: flex; gap: 8px; flex-wrap: wrap; }
+.filter { background: transparent; border: 1px solid var(--tea-green); color: var(--tea-green); padding: 6px 16px; border-radius: 50px; cursor: pointer; font-size: 14px; font-family: var(--font-body); transition: all var(--transition); }
+.filter:hover { background-color: var(--parchment); }
+.filter.active { background-color: var(--tea-green); color: var(--cream); }
+.sort-select { padding: 8px 16px; border: 1px solid #ccc; border-radius: var(--radius); font-family: var(--font-body); font-size: 14px; background: #fff; cursor: pointer; }
+
+.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+@media (min-width: 768px) { .grid { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
+@media (min-width: 1024px) { .grid { grid-template-columns: repeat(4, 1fr); gap: 32px; } }
+.card { background: #fff; border-radius: var(--radius); padding: 16px; display: flex; flex-direction: column; position: relative; transition: transform var(--transition), box-shadow var(--transition); height: 100%; border: 1px solid var(--parchment); }
+.card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.05); }
+.card-img-wrap { position: relative; width: 100%; padding-bottom: 100%; overflow: hidden; border-radius: var(--radius) var(--radius) 0 0; margin-bottom: 16px; background-color: var(--cream); }
+.card img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; cursor: pointer; }
+.badge-oos { position: absolute; top: 8px; left: 8px; background: var(--error); color: #fff; font-size: 12px; font-weight: 600; padding: 4px 8px; border-radius: 4px; z-index: 2; }
+.heart { position: absolute; top: 8px; right: 8px; background: none; border: none; font-size: 24px; color: #ccc; cursor: pointer; z-index: 2; padding: 4px; transition: color var(--transition), transform var(--transition); }
+.heart:hover { transform: scale(1.1); }
+.heart.liked { color: var(--error); }
+.card h5 { font-size: 18px; margin-bottom: 8px; flex-grow: 0; }
+.stars { color: var(--saffron); font-size: 14px; margin-bottom: 8px; }
+.card .desc { font-size: 14px; color: #555; flex-grow: 1; margin-bottom: 16px; }
+.card-bottom { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+.card .price { font-weight: 600; font-size: 18px; color: var(--tea-green); }
+.add-btn { padding: 8px 16px; min-height: 40px; font-size: 14px; width: 100%; margin-top: 16px; background-color: var(--tea-green); color: var(--cream); border: none; border-radius: var(--radius); cursor: pointer; transition: background var(--transition); }
+.add-btn:hover:not(:disabled) { background-color: var(--leaf); }
+.add-btn:disabled { background-color: #ccc; color: #666; cursor: not-allowed; }
+
+.modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 50; align-items: center; justify-content: center; padding: 16px; }
+.modal { background: var(--cream); border-radius: var(--radius); padding: 32px; width: 100%; max-width: 600px; position: relative; max-height: 90vh; overflow-y: auto; }
+.modal-close { position: absolute; top: 16px; right: 16px; background: none; border: none; font-size: 24px; cursor: pointer; color: var(--ink); }
+
+#cart { position: fixed; top: 0; right: -400px; width: 100%; max-width: 400px; height: 100vh; background: var(--cream); box-shadow: -4px 0 24px rgba(0,0,0,0.1); padding: 24px; z-index: 60; overflow-y: auto; transition: right 300ms ease-out; display: flex; flex-direction: column; }
+.cart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--parchment); }
+.cart-header h2 { margin: 0; }
+.close-cart { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--ink); }
+.cart-items { flex-grow: 1; overflow-y: auto; margin-bottom: 24px; }
+.cart-line { display: grid; grid-template-columns: 1fr auto; gap: 8px; padding: 16px 0; border-bottom: 1px solid var(--parchment); }
+.cart-item-info { display: flex; flex-direction: column; gap: 4px; }
+.cart-item-title { font-weight: 600; font-size: 14px; }
+.cart-item-price { color: var(--tea-green); font-size: 14px; }
+.qty-controls { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+.qty-btn { background: #fff; border: 1px solid #ccc; width: 28px; height: 28px; border-radius: 4px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; transition: background var(--transition); }
+.qty-btn:hover { background: var(--parchment); }
+.qty-input { width: 40px; text-align: center; border: 1px solid #ccc; border-radius: 4px; height: 28px; font-family: var(--font-body); }
+.remove { color: var(--error); font-size: 12px; text-decoration: underline; cursor: pointer; background: none; border: none; padding: 0; margin-left: auto; align-self: center; }
+
+.shipping-progress { margin-bottom: 24px; background: #fff; padding: 16px; border-radius: var(--radius); }
+#ship-msg { font-size: 14px; margin-bottom: 8px; font-weight: 500; text-align: center; }
+.ship-bar { background: var(--parchment); height: 8px; border-radius: 4px; overflow: hidden; }
+.ship-fill { background: var(--leaf); height: 100%; width: 0; transition: width 300ms ease; }
+
+.cart-summary { background: #fff; padding: 16px; border-radius: var(--radius); margin-bottom: 24px; }
+.coupon-box { display: flex; gap: 8px; margin-bottom: 16px; }
+.coupon-box input { flex-grow: 1; padding: 8px 12px; border: 1px solid #ccc; border-radius: var(--radius); font-family: var(--font-body); text-transform: uppercase; }
+#totals { font-size: 14px; line-height: 2; }
+#totals b { font-size: 18px; color: var(--tea-green); display: block; margin-top: 8px; border-top: 1px solid var(--parchment); padding-top: 8px; }
+
+.delivery-check { text-align: center; max-width: 500px; margin: 0 auto; }
+.pin-form { display: flex; gap: 8px; justify-content: center; margin-bottom: 16px; }
+.pin-form input { padding: 12px 16px; border: 1px solid #ccc; border-radius: var(--radius); font-family: var(--font-body); font-size: 16px; width: 200px; }
+#pin-result { font-weight: 500; min-height: 24px; margin-top: 8px; }
+
+.reviews-grid { display: grid; gap: 24px; grid-template-columns: 1fr; }
+@media (min-width: 768px) { .reviews-grid { grid-template-columns: repeat(3, 1fr); } }
+.review-card { background: #fff; padding: 24px; border-radius: var(--radius); box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+.review-stars { color: var(--saffron); margin-bottom: 16px; }
+.review-text { font-style: italic; color: #555; margin-bottom: 16px; }
+.review-author { font-weight: 600; font-size: 14px; }
+
+.faq-item { border-bottom: 1px solid #ccc; margin-bottom: 8px; }
+.faq-btn { width: 100%; text-align: left; background: none; border: none; padding: 16px 0; font-family: var(--font-heading); font-size: 18px; color: var(--tea-green); cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+.faq-btn::after { content: '+'; font-size: 24px; transition: transform var(--transition); }
+.faq-btn[aria-expanded="true"]::after { transform: rotate(45deg); }
+.faq-content { padding-bottom: 16px; display: none; color: #555; }
+.faq-btn[aria-expanded="true"] + .faq-content { display: block; }
+
+.newsletter { text-align: center; max-width: 600px; margin: 0 auto; }
+.nl-form { display: flex; gap: 8px; justify-content: center; margin-bottom: 16px; flex-wrap: wrap; }
+.nl-form input { padding: 12px 16px; border: 1px solid #ccc; border-radius: var(--radius); font-family: var(--font-body); font-size: 16px; flex-grow: 1; min-width: 250px; }
+
+.footer { background-color: var(--tea-green); color: var(--parchment); padding: 64px 0 32px; }
+.footer-grid { display: grid; gap: 32px; grid-template-columns: 1fr; margin-bottom: 48px; }
+@media (min-width: 768px) { .footer-grid { grid-template-columns: repeat(3, 1fr); } }
+.footer h3 { color: var(--cream); }
+.footer a { color: var(--parchment); text-decoration: none; transition: color var(--transition); display: block; margin-bottom: 8px; }
+.footer a:hover { color: var(--cream); text-decoration: underline; }
+.legal { font-size: 12px; color: rgba(235, 226, 207, 0.7); text-align: center; border-top: 1px solid rgba(235, 226, 207, 0.2); padding-top: 24px; }
+</style>
+</head>
+
+<body>
+
+<div class="announce">Free shipping on orders above ₹499. Use code WELCOME10 for 10% off.</div>
+
+<div class="header">
+  <div class="wrapper">
+    <a href="#" class="logo">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17 21L12 16L7 21V3H17V21ZM12 13.5L14.5 16H9.5L12 13.5Z"/></svg>
+      Mistvale
+    </a>
+    <div class="nav">
+      <a href="#">Home</a>
+      <a href="#shop">Shop</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <input class="search" id="search" placeholder="Search teas...">
+    <button class="cart-btn" onclick="openCart()" aria-label="Open Cart">
+      Cart <span id="cart-count">0</span>
+    </button>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="wrapper">
+    <div class="hero-content">
+      <h1>Hill-grown tea, honestly made.</h1>
+      <p>Discover our premium selection of teas from the Darjeeling hills and beyond.</p>
+      <a href="#shop" class="btn btn-primary">Shop the teas</a>
+    </div>
+  </div>
+</div>
+
+<div class="trust-strip">
+  <div class="trust-item">Returns accepted within 7 days</div>
+  <div class="trust-item">All prices inclusive of GST</div>
+  <div class="trust-item">Hill-grown premium tea</div>
+</div>
+
+<div class="wrapper" id="shop">
+  <section>
+    <div class="shop-controls">
+      <div class="filters">
+        <button class="filter active" onclick="filterProducts('All', this)">All Teas</button>
+        <button class="filter" onclick="filterProducts('Black', this)">Black</button>
+        <button class="filter" onclick="filterProducts('Green', this)">Green</button>
+        <button class="filter" onclick="filterProducts('Herbal', this)">Herbal</button>
+        <button class="filter" onclick="filterProducts('Gifts', this)">Gifts</button>
+      </div>
+      <select id="sort" class="sort-select" onchange="sortProducts()" aria-label="Sort products">
+        <option value="default">Sort by</option>
+        <option value="low">Price: Low to High</option>
+        <option value="high">Price: High to Low</option>
+        <option value="name">Name</option>
+      </select>
+    </div>
+    <div class="grid" id="grid"></div>
+  </section>
+</div>
+
+<div id="quickview" class="modal-overlay" onclick="if(event.target === this) this.style.display='none'">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('quickview').style.display='none'" aria-label="Close modal">&times;</button>
+    <div id="qv-body"></div>
+  </div>
+</div>
+
+<div id="cart" aria-modal="true" role="dialog" aria-labelledby="cart-title">
+  <div class="cart-header">
+    <h2 id="cart-title">Your Cart</h2>
+    <button class="close-cart" onclick="closeCart()" aria-label="Close cart">&times;</button>
+  </div>
+  <div class="shipping-progress">
+    <div id="ship-msg"></div>
+    <div class="ship-bar"><div class="ship-fill" id="ship-fill"></div></div>
+  </div>
+  <div id="cart-items" class="cart-items"></div>
+  <div class="cart-summary">
+    <div class="coupon-box">
+      <input id="coupon" placeholder="Coupon code (e.g. WELCOME10)" aria-label="Coupon code">
+      <button class="btn btn-secondary" onclick="applyCoupon()">Apply</button>
+    </div>
+    <div id="totals"></div>
+  </div>
+  <button class="btn btn-primary" style="width: 100%;" onclick="document.getElementById('checkout-form').dispatchEvent(new Event('submit'))">Checkout</button>
+</div>
+
+<form id="checkout-form" action="https://mistvale.example/cart/checkout" method="POST" style="display:none">
+  <input type="hidden" name="items">
+  <input type="hidden" name="coupon">
+</form>
+
+<div class="wrapper bg-parchment">
+  <section class="delivery-check">
+    <h2>Check Delivery Time</h2>
+    <div class="pin-form">
+      <input id="pin" placeholder="Enter 6-digit pincode" maxlength="6" pattern="[0-9]*" aria-label="Pincode">
+      <button class="btn btn-primary" onclick="checkPin()">Check</button>
+    </div>
+    <div id="pin-result"></div>
+  </section>
+</div>
+
+<div class="wrapper">
+  <section class="reviews">
+    <h2>What Our Customers Say</h2>
+    <div class="reviews-grid">
+      <div class="review-card"><div class="review-stars">★★★★★</div><div class="review-text">"Best masala chai I have ever had. Tastes like my nani's kitchen."</div><div class="review-author">- Ananya, Pune</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><div class="review-text">"The Darjeeling first flush is so fresh. Packaging was lovely too."</div><div class="review-author">- Rohit, Bengaluru</div></div>
+      <div class="review-card"><div class="review-stars">★★★★★</div><div class="review-text">"Bought the sampler as a gift and now my whole family is hooked."</div><div class="review-author">- Meera, Kochi</div></div>
+    </div>
+  </section>
+</div>
+
+<div class="wrapper bg-parchment" id="faq">
+  <section class="faq-section" style="max-width: 800px; margin: 0 auto;">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-list">
+      <div class="faq-item"><button class="faq-btn" aria-expanded="false" onclick="this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true')">How long does delivery take?</button><div class="faq-content">2 to 5 working days depending on your pincode. Use the delivery check to see yours.</div></div>
+      <div class="faq-item"><button class="faq-btn" aria-expanded="false" onclick="this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true')">Can I return tea?</button><div class="faq-content">Unopened packs can be returned within 7 days of delivery. Opened tea cannot be returned for hygiene reasons.</div></div>
+      <div class="faq-item"><button class="faq-btn" aria-expanded="false" onclick="this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true')">How should I store my tea?</button><div class="faq-content">In an airtight container, away from light, heat and strong smells. It tastes best within 6 months of opening.</div></div>
+      <div class="faq-item"><button class="faq-btn" aria-expanded="false" onclick="this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true')">Is Chamomile & Tulsi caffeine-free?</button><div class="faq-content">Yes, it is a caffeine-free herbal blend.</div></div>
+      <div class="faq-item"><button class="faq-btn" aria-expanded="false" onclick="this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true')">Do you ship outside India?</button><div class="faq-content">Not yet. We currently deliver within India only.</div></div>
+      <div class="faq-item"><button class="faq-btn" aria-expanded="false" onclick="this.setAttribute('aria-expanded', this.getAttribute('aria-expanded') === 'true' ? 'false' : 'true')">Can I send tea as a gift?</button><div class="faq-content">Yes. The Tea Lover's Sampler comes in a wooden gift box with a brewing guide.</div></div>
+    </div>
+  </section>
+</div>
+
+<div class="wrapper">
+  <section class="newsletter">
+    <h2>Join the Tea Club</h2>
+    <p>Subscribe for updates and get 10% off your first order.</p>
+    <div class="nl-form">
+      <input id="nl-email" type="email" placeholder="Your email address" aria-label="Email address">
+      <button class="btn btn-primary" onclick="subscribe()">Subscribe</button>
+    </div>
+    <div id="nl-msg"></div>
+  </section>
+</div>
+
+<footer class="footer">
+  <div class="wrapper">
+    <div class="footer-grid">
+      <div><h3>Mistvale</h3><p>Hill-grown tea, honestly made.</p></div>
+      <div><h3>Contact Us</h3><p>14 Hill Cart Road, Siliguri,<br>West Bengal 734001, India</p><p>+91 90000 12345<br>hello@mistvale.example</p></div>
+      <div><h3>Links</h3><a href="#shop">Shop Teas</a><a href="#faq">FAQ</a><a href="https://instagram.com/mistvale.example" target="_blank" rel="noopener">Instagram</a></div>
+    </div>
+    <p class="legal">All prices are inclusive of GST. Returns are accepted within 7 days of delivery on unopened packs only; opened tea cannot be returned for hygiene reasons. Tea colour and flavour may vary slightly between harvests.</p>
+  </div>
+</footer>
+
+<script>
+const PRODUCTS = [
+  { id: 101, name: "Assam Breakfast Black Tea", category: "Black", price: 349, stock: 40, image: "images/p101.png", desc: "Strong, malty CTC tea from Upper Assam estates. Perfect with milk and a little sugar in the morning." },
+  { id: 102, name: "Darjeeling First Flush", category: "Black", price: 1299, stock: 12, image: "images/p102.png", desc: "Delicate, floral spring harvest leaves with a muscatel note. Best without milk.", rating: 4.8, reviews: 128 },
+  { id: 103, name: "Kashmiri Kahwa", category: "Green", price: 549, stock: 25, image: "images/p103.png", desc: "Green tea with saffron, cardamom, cinnamon and almond flakes." },
+  { id: 104, name: "Masala Chai Blend", category: "Black", price: 399, stock: 60, image: "images/p104.png", desc: "Bold Assam leaves with ginger, cardamom, clove and black pepper. Our bestseller.", rating: 4.7, reviews: 342 },
+  { id: 105, name: "Nilgiri Green Tea", category: "Green", price: 449, stock: 30, image: "images/p105.png", desc: "Smooth, grassy green tea from the Blue Mountains of the south." },
+  { id: 106, name: "Chamomile & Tulsi", category: "Herbal", price: 499, stock: 18, image: "images/p106.png", desc: "Caffeine-free calming blend of chamomile flowers and holy basil." },
+  { id: 107, name: "Hibiscus Rose Infusion", category: "Herbal", price: 599, stock: 0, image: "images/p107.png", desc: "Tangy hibiscus with rose petals. Lovely iced." },
+  { id: 108, name: "Tea Lover's Sampler Gift Box", category: "Gifts", price: 1899, stock: 9, image: "images/p108.png", desc: "Six of our favourite teas in a wooden gift box with a brewing guide." }
+];
+
+const API = {
+  search: function (query) {
+    const q = String(query).trim().toLowerCase();
+    const delay = Math.max(120, 900 - q.length * 140);
+    return new Promise(function (resolve) {
+      setTimeout(function () {
+        resolve(PRODUCTS.filter(p => p.name.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q)).map(p => p.id));
+      }, delay);
+    });
+  },
+  checkPincode: function (pin) {
+    const zones = { '73': 2, '70': 3, '71': 3, '11': 4, '40': 4, '56': 5, '60': 5, '50': 5 };
+    return new Promise(function (resolve, reject) {
+      setTimeout(function () {
+        if (!/^[1-9][0-9]{5}$/.test(String(pin))) return reject(new Error('INVALID_PINCODE'));
+        const days = zones[String(pin).slice(0, 2)];
+        resolve(days ? { serviceable: true, days: days } : { serviceable: false });
+      }, 400 + Math.random() * 600);
+    });
+  }
+};
+
+let cart = JSON.parse(localStorage.getItem('mv_cart')) || [];
+let currentCategory = 'All';
+let currentSort = 'default';
+let currentSearchIds = null;
+let searchSessionId = 0;
+let currentDiscount = 0;
+
+const formatMoney = (amount) => '₹' + amount.toLocaleString('en-IN');
+
+document.addEventListener("DOMContentLoaded", function() {
+    applyFiltersAndSort();
+    updateCount();
+    document.getElementById('search').addEventListener('input', handleSearch);
+    const checkoutForm = document.getElementById('checkout-form');
+    if (checkoutForm) checkoutForm.addEventListener('submit', handleCheckout);
+});
+
+function applyFiltersAndSort() {
+    let list = PRODUCTS.slice();
+    if (currentSearchIds !== null) list = list.filter(p => currentSearchIds.includes(p.id));
+    if (currentCategory !== 'All') list = list.filter(p => p.category === currentCategory);
+    
+    if (currentSort === 'low') list.sort((a, b) => a.price - b.price);
+    if (currentSort === 'high') list.sort((a, b) => b.price - a.price);
+    if (currentSort === 'name') list.sort((a, b) => a.name.localeCompare(b.name));
+    
+    list.sort((a, b) => (a.stock === 0 ? 1 : 0) - (b.stock === 0 ? 1 : 0));
+    renderProducts(list);
+}
+
+function renderProducts(list) {
+    let html = '';
+    list.forEach(p => {
+        html += `<div class="card">
+            <button class="heart" onclick="toggleWish(event)" aria-label="Add to wishlist">♥</button>
+            <div class="card-img-wrap"><img src="${p.image}" alt="${p.name}" onclick="openQuickView(${p.id})"></div>
+            <h5>${p.name}</h5>
+            <div class="stars">${p.rating ? '★★★★★ (' + p.reviews + ')' : '☆☆☆☆☆ (0)'}</div>
+            <div class="desc">${p.desc}</div>
+            <div class="card-bottom"><div class="price" id="price-${p.id}">${formatMoney(p.price)}</div></div>`;
+        if (p.stock === 0) {
+            html += '<span class="badge-oos">SOLD OUT</span><button class="add-btn disabled" disabled>SOLD OUT</button>';
+        } else {
+            html += `<button class="add-btn" onclick="addToCart(${p.id})">ADD TO CART</button>`;
+        }
+        html += '</div>';
+    });
+    document.getElementById('grid').innerHTML = html;
+}
+
+function filterProducts(cat, el) {
+    document.querySelectorAll('.filter').forEach(btn => btn.classList.remove('active'));
+    el.classList.add('active');
+    currentCategory = cat;
+    applyFiltersAndSort();
+}
+
+function sortProducts() {
+    currentSort = document.getElementById('sort').value;
+    applyFiltersAndSort();
+}
+
+async function handleSearch(e) {
+    const q = e.target.value.trim();
+    const sessionId = ++searchSessionId;
+    if (q === '') { currentSearchIds = null; applyFiltersAndSort(); return; }
+    try {
+        const ids = await API.search(q);
+        if (sessionId === searchSessionId) { currentSearchIds = ids; applyFiltersAndSort(); }
+    } catch (err) { console.error(err); }
+}
+
+function toggleWish(e) { e.target.classList.toggle('liked'); }
+
+function openQuickView(id) {
+    const p = PRODUCTS.find(x => x.id === id);
+    let html = `<img src="${p.image}" alt="${p.name}" style="width:100%; border-radius:8px; margin-bottom:16px;"><h2>${p.name}</h2><p>${p.desc}</p><p style="font-size:24px; font-weight:bold; color:var(--tea-green);">${formatMoney(p.price)}</p>`;
+    if(p.stock > 0) html += `<button class="btn btn-primary" onclick="addToCart(${p.id}); document.getElementById('quickview').style.display='none'">ADD TO CART</button>`;
+    else html += `<button class="btn btn-secondary disabled" disabled>SOLD OUT</button>`;
+    document.getElementById('qv-body').innerHTML = html;
+    document.getElementById('quickview').style.display = 'flex';
+}
+
+function addToCart(id) {
+    const p = PRODUCTS.find(x => x.id === id);
+    if (!p || p.stock === 0) return;
+    const existing = cart.find(c => c.id === id);
+    if (existing) {
+        if (existing.qty < 5 && existing.qty < p.stock) existing.qty++;
+        else { alert('Maximum limit reached for this item.'); return; }
+    } else {
+        cart.push({ id: p.id, qty: 1 });
+    }
+    saveCart(); updateCount();
+    if(document.getElementById('cart').style.right === '0px') renderCart();
+}
+
+function saveCart() { localStorage.setItem('mv_cart', JSON.stringify(cart)); }
+function updateCount() { document.getElementById('cart-count').innerText = cart.reduce((sum, item) => sum + item.qty, 0); }
+function openCart() { renderCart(); document.getElementById('cart').style.right = '0'; }
+function closeCart() { document.getElementById('cart').style.right = '-400px'; }
+
+function renderCart() {
+    let subtotal = 0, eligibleForDiscount = 0, html = '';
+    cart.forEach((c, index) => {
+        const p = PRODUCTS.find(x => x.id === c.id);
+        if (!p) return;
+        if (c.qty > p.stock) c.qty = p.stock;
+        if (c.qty > 5) c.qty = 5;
+        const lineTotal = p.price * c.qty;
+        subtotal += lineTotal;
+        if (p.category !== 'Gifts') eligibleForDiscount += lineTotal;
+        
+        html += `<div class="cart-line">
+            <div class="cart-item-info"><span class="cart-item-title">${p.name}</span><span class="cart-item-price">${formatMoney(p.price)}</span></div>
+            <div>
+              <div class="qty-controls">
+                <button class="qty-btn" onclick="updateQty(${index}, -1)">-</button>
+                <input class="qty-input" type="number" value="${c.qty}" readonly>
+                <button class="qty-btn" onclick="updateQty(${index}, 1)">+</button>
+              </div>
+              <button class="remove" onclick="removeItem(${index})">Remove</button>
+            </div>
+        </div>`;
+    });
+    document.getElementById('cart-items').innerHTML = html;
+
+    currentDiscount = 0;
+    let couponMsg = '';
+    const code = document.getElementById('coupon').value.trim().toUpperCase();
+    if (code === 'WELCOME10') {
+        if (subtotal >= 399) { currentDiscount = Math.min(150, eligibleForDiscount * 0.1); couponMsg = '<span style="color:var(--leaf);">(WELCOME10 Applied)</span>'; }
+        else { couponMsg = '<span style="color:var(--error);">(Min ₹399 needed)</span>'; }
+    }
+
+    const amt = subtotal - currentDiscount;
+    let shipping = 49;
+    if (amt >= 599) {
+        shipping = 0;
+        document.getElementById('ship-msg').innerHTML = 'Yay! You get FREE shipping!';
+        document.getElementById('ship-fill').style.width = '100%';
+    } else {
+        document.getElementById('ship-msg').innerHTML = `Add ${formatMoney(599 - amt)} more for FREE shipping!`;
+        document.getElementById('ship-fill').style.width = Math.min(100, (amt / 599) * 100) + '%';
+    }
+
+    const total = Math.round(amt + shipping);
+    document.getElementById('totals').innerHTML = `Subtotal: ${formatMoney(subtotal)}<br>Shipping: ${shipping === 0 ? 'FREE' : formatMoney(shipping)}<br>Discount ${couponMsg}: -${formatMoney(currentDiscount)}<br><b>Total: ${formatMoney(total)}</b>`;
+    saveCart(); updateCount();
+}
+
+function updateQty(index, change) {
+    const item = cart[index], p = PRODUCTS.find(x => x.id === item.id);
+    let n = item.qty + change;
+    if (n > 0 && n <= 5 && n <= p.stock) { item.qty = n; renderCart(); }
+    else if (n > 5 || n > p.stock) alert('Maximum quantity reached.');
+}
+function removeItem(index) { cart.splice(index, 1); renderCart(); }
+function applyCoupon() { renderCart(); }
+
+function checkPin() {
+    const pin = document.getElementById('pin').value.trim(), res = document.getElementById('pin-result');
+    res.innerHTML = 'Checking...';
+    API.checkPincode(pin).then(r => { res.innerHTML = r.serviceable ? `Delivery to ${pin} in ${r.days} days!` : `Sorry, we do not deliver to ${pin}.`; })
+    .catch(err => { res.innerHTML = err.message === 'INVALID_PINCODE' ? 'Please enter a valid 6-digit pincode.' : 'Something went wrong.'; });
+}
+
+function subscribe() {
+    const email = document.getElementById('nl-email').value.trim();
+    document.getElementById('nl-msg').innerHTML = (email.includes('@') && email.includes('.')) ? `<span style="color:var(--leaf)">Thanks ${email}! Check your inbox.</span>` : '<span style="color:var(--error)">Please enter a valid email.</span>';
+}
+
+function handleCheckout(e) {
+    if(cart.length === 0) { e.preventDefault(); alert('Your cart is empty!'); return; }
+    let itemsInput = document.querySelector('input[name="items"]');
+    if (!itemsInput) { itemsInput = document.createElement('input'); itemsInput.type = 'hidden'; itemsInput.name = 'items'; this.appendChild(itemsInput); }
+    let couponInput = document.querySelector('input[name="coupon"]');
+    if (!couponInput) { couponInput = document.createElement('input'); couponInput.type = 'hidden'; couponInput.name = 'coupon'; this.appendChild(couponInput); }
+    
+    itemsInput.value = JSON.stringify(cart.map(c => ({ id: c.id, qty: c.qty })));
+    couponInput.value = currentDiscount > 0 ? document.getElementById('coupon').value.trim().toUpperCase() : '';
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "name": "Mistvale Tea Co.",
+      "url": "https://mistvale.example",
+      "logo": "https://mistvale.example/images/logo.png",
+      "contactPoint": { "@type": "ContactPoint", "telephone": "+91-90000-12345", "contactType": "customer service", "email": "hello@mistvale.example" },
+      "address": { "@type": "PostalAddress", "streetAddress": "14 Hill Cart Road", "addressLocality": "Siliguri", "addressRegion": "West Bengal", "postalCode": "734001", "addressCountry": "IN" },
+      "sameAs": [ "https://instagram.com/mistvale.example" ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "How long does delivery take?", "acceptedAnswer": { "@type": "Answer", "text": "2 to 5 working days depending on your pincode. Use the delivery check to see yours." } },
+        { "@type": "Question", "name": "Can I return tea?", "acceptedAnswer": { "@type": "Answer", "text": "Unopened packs can be returned within 7 days of delivery. Opened tea cannot be returned for hygiene reasons." } },
+        { "@type": "Question", "name": "How should I store my tea?", "acceptedAnswer": { "@type": "Answer", "text": "In an airtight container, away from light, heat and strong smells. It tastes best within 6 months of opening." } },
+        { "@type": "Question", "name": "Is Chamomile & Tulsi caffeine-free?", "acceptedAnswer": { "@type": "Answer", "text": "Yes, it is a caffeine-free herbal blend." } },
+        { "@type": "Question", "name": "Do you ship outside India?", "acceptedAnswer": { "@type": "Answer", "text": "Not yet. We currently deliver within India only." } },
+        { "@type": "Question", "name": "Can I send tea as a gift?", "acceptedAnswer": { "@type": "Answer", "text": "Yes. The Tea Lover's Sampler comes in a wooden gift box with a brewing guide." } }
+      ]
+    }
+  ]
+}
+</script>
+
+</body>
+</html>
